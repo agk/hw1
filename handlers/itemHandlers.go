@@ -37,6 +37,7 @@ func CreateItem(writer http.ResponseWriter, request *http.Request) {
 	initHeaders(writer)
 	log.Println("Creating new Item ....")
 	var Item models.Item
+	var ok bool
 
 	err := json.NewDecoder(request.Body).Decode(&Item)
 	if err != nil {
@@ -63,7 +64,7 @@ func CreateItem(writer http.ResponseWriter, request *http.Request) {
 }
 
 func UpdateItemById(writer http.ResponseWriter, request *http.Request) {
-	var ok bool
+	//var ok bool
 	initHeaders(writer)
 	log.Println("Updating Item ...")
 	id, err := strconv.Atoi(mux.Vars(request)["id"])
@@ -74,7 +75,7 @@ func UpdateItemById(writer http.ResponseWriter, request *http.Request) {
 		json.NewEncoder(writer).Encode(msg)
 		return
 	}
-	oldItem, ok := models.FindItemById(id)
+	_, ok := models.FindItemById(id)
 	var newItem models.Item
 	if !ok {
 		log.Println("Item not found in data base . id :", id)
@@ -112,7 +113,7 @@ func DeleteItemById(writer http.ResponseWriter, request *http.Request) {
 		json.NewEncoder(writer).Encode(msg)
 		return
 	}
-	Item, ok := models.FindItemById(id)
+	_, ok := models.FindItemById(id)
 	if !ok {
 		log.Println("Item not found in database. id :", id)
 		writer.WriteHeader(404)

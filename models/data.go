@@ -22,7 +22,7 @@ func init() {
 
 func FindItemById(id int) (Item, bool) {
 	var item Item
-	var found bool
+	var found bool = false
 	for _, i := range DB {
 		if i.ID == id {
 			item = i
